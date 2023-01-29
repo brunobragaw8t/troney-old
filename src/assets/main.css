@@ -1,3 +1,25 @@
+/**
+ * Google Fonts
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;1,400&display=swap');
+
+
+/**
+ * Font Awesome
+ */
+
+@import "/node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+
+.fa, .fa-brands, .fa-classic, .fa-regular, .fa-sharp, .fa-solid, .fab, .far, .fas {
+  line-height: inherit;
+}
+
+
+/**
+ * Tailwind
+ */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
