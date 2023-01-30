@@ -2,7 +2,7 @@
 import { computed } from "vue";
 
 export interface IBaseAlert {
-  type: "danger" | "success";
+  type: string;
   message: string;
 }
 
