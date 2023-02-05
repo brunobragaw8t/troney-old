@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import LayoutForm from "@/components/LayoutForm.vue";
 import FormLogin from "@/components/FormLogin.vue";
-// import FormRegister from "@/components/FormRegister.vue";
+import FormRegister from "@/components/FormRegister.vue";
 
 /**
  * State
@@ -19,9 +19,9 @@ function displayForm(form: string): void {
   <LayoutForm>
     <FormLogin v-if="'login' === displayedForm" @display-form="displayForm" />
 
-    <!-- <FormRegister -->
-    <!--   v-if="'register' === displayedForm" -->
-    <!--   @display-form="displayForm" -->
-    <!-- /> -->
+    <FormRegister
+      v-if="'register' === displayedForm"
+      @display-form="displayForm"
+    />
   </LayoutForm>
 </template>
