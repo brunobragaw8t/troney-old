@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import LayoutMain from "@/components/LayoutMain.vue";
+</script>
+
 <template>
-  <h1>Home View</h1>
+  <LayoutMain>
+    <h1>Home View</h1>
+  </LayoutMain>
 </template>
