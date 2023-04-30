@@ -4,6 +4,13 @@ import BaseForm from "@/components/BaseForm.vue";
 import InputText from "@/components/InputText.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import BaseAlert from "@/components/BaseAlert.vue";
+import { useUserStore } from "@/stores/user";
+
+/**
+ * Store
+ */
+
+const userStore = useUserStore();
 
 /**
  * State
@@ -25,8 +32,20 @@ const form = ref({
  * Functions
  */
 
-function signIn(): void {
-  console.log("Logging in...");
+async function signIn(): Promise<void> {
+  form.value.isLoading = true;
+
+  form.value.response = await userStore.login(
+    form.value.data.email,
+    form.value.data.password
+  );
+
+  form.value.data = {
+    email: "",
+    password: "",
+  };
+
+  form.value.isLoading = false;
 }
 
 /**
