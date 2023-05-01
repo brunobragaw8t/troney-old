@@ -4,6 +4,14 @@ import BaseForm from "@/components/BaseForm.vue";
 import InputText from "@/components/InputText.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import BaseAlert from "@/components/BaseAlert.vue";
+import { useUserStore } from "@/stores/user";
+import router from "@/router";
+
+/**
+ * Store
+ */
+
+const userStore = useUserStore();
 
 /**
  * State
@@ -27,8 +35,31 @@ const form = ref({
  * Functions
  */
 
-function signUp(): void {
-  console.log("Signing up...");
+async function signUp(): Promise<void> {
+  form.value.isLoading = true;
+
+  form.value.response = await userStore.register(
+    form.value.data.name,
+    form.value.data.email,
+    form.value.data.password,
+    form.value.data.repassword
+  );
+
+  if ("success" !== form.value.response.type) {
+    form.value.isLoading = false;
+    return;
+  }
+
+  form.value.data = {
+    name: "",
+    email: "",
+    password: "",
+    repassword: "",
+  };
+
+  setTimeout(() => {
+    router.push("/");
+  }, 2000);
 }
 
 /**

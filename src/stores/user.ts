@@ -4,6 +4,8 @@ import type { User } from "../dto/user";
 import type { IBaseAlert } from "@/components/BaseAlert.vue";
 import parseJwt from "@/utilities/parse-jwt";
 import { isValidUserDto } from "@/utilities/is-valid-user-dto";
+import type { ApiError } from "@/dto/api-error";
+import { isApiError } from "@/utilities/is-api-error";
 
 export const useUserStore = defineStore("user", () => {
   const user = ref<User | null>(null);
@@ -74,10 +76,62 @@ export const useUserStore = defineStore("user", () => {
     };
   }
 
+  async function register(
+    name: string,
+    email: string,
+    password: string,
+    repassword: string
+  ): Promise<IBaseAlert> {
+    let json: unknown = null;
+
+    try {
+      const response = await fetch(
+        import.meta.env.VITE_API_BASE + "/auth/register",
+        {
+          method: "POST",
+          body: JSON.stringify({ name, email, password, repassword }),
+          headers: { "Content-type": "application/json" },
+        }
+      );
+
+      json = await response.json();
+
+      if (201 !== response.status) {
+        if (!isApiError(json)) {
+          throw new Error();
+        }
+
+        return {
+          type: "danger",
+          message: json.message,
+        };
+      }
+    } catch {
+      return {
+        type: "danger",
+        message:
+          "An error has occurred while trying to register. Please try again.",
+      };
+    }
+
+    if ("danger" !== (await login(email, password)).type) {
+      return {
+        type: "success",
+        message: "Registered successfully. Redirecting...",
+      };
+    }
+
+    return {
+      type: "danger",
+      message:
+        "An error has occurred while trying to register. Please try again.",
+    };
+  }
+
   function logout() {
     user.value = null;
     sessionStorage.removeItem("user");
   }
 
-  return { user, login, logout };
+  return { user, login, register, logout };
 });
