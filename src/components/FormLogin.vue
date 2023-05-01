@@ -5,6 +5,7 @@ import InputText from "@/components/InputText.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import BaseAlert from "@/components/BaseAlert.vue";
 import { useUserStore } from "@/stores/user";
+import router from "@/router";
 
 /**
  * Store
@@ -40,12 +41,19 @@ async function signIn(): Promise<void> {
     form.value.data.password
   );
 
+  if ("success" !== form.value.response.type) {
+    form.value.isLoading = false;
+    return;
+  }
+
   form.value.data = {
     email: "",
     password: "",
   };
 
-  form.value.isLoading = false;
+  setTimeout(() => {
+    router.push("/");
+  }, 2000);
 }
 
 /**
