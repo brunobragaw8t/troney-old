@@ -74,5 +74,10 @@ export const useUserStore = defineStore("user", () => {
     };
   }
 
-  return { user, login };
+  function logout() {
+    user.value = null;
+    sessionStorage.removeItem("user");
+  }
+
+  return { user, login, logout };
 });
