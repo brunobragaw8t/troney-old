@@ -4,7 +4,6 @@ import type { User } from "../dto/user";
 import type { IBaseAlert } from "@/components/BaseAlert.vue";
 import parseJwt from "@/utilities/parse-jwt";
 import { isValidUserDto } from "@/utilities/is-valid-user-dto";
-import type { ApiError } from "@/dto/api-error";
 import { isApiError } from "@/utilities/is-api-error";
 
 export const useUserStore = defineStore("user", () => {
