@@ -3,6 +3,7 @@ import { ref } from "vue";
 import type { User } from "../dto/user";
 import type { IBaseAlert } from "@/components/BaseAlert.vue";
 import parseJwt from "@/utilities/parse-jwt";
+import { isValidUserDto } from "@/utilities/is-valid-user-dto";
 
 export const useUserStore = defineStore("user", () => {
   const user = ref<User | null>(null);
@@ -10,13 +11,7 @@ export const useUserStore = defineStore("user", () => {
   const userAccessToken = sessionStorage.getItem("user");
   const userJwt = userAccessToken ? parseJwt(userAccessToken) : null;
 
-  if (
-    "object" === typeof userJwt &&
-    userJwt &&
-    "sub" in userJwt &&
-    "name" in userJwt &&
-    "email" in userJwt
-  ) {
+  if (userJwt && isValidUserDto(userJwt)) {
     user.value = userJwt;
   }
 
@@ -42,7 +37,12 @@ export const useUserStore = defineStore("user", () => {
       };
     }
 
-    if ("object" !== typeof json || null === json || !("accessToken" in json)) {
+    if (
+      "object" !== typeof json ||
+      null === json ||
+      !("accessToken" in json) ||
+      "string" !== typeof json.accessToken
+    ) {
       return {
         type: "danger",
         message:
@@ -52,7 +52,7 @@ export const useUserStore = defineStore("user", () => {
 
     const payload = parseJwt(json.accessToken);
 
-    if (!("sub" in payload) || !("name" in payload) || !("email" in payload)) {
+    if (!isValidUserDto(payload)) {
       return {
         type: "danger",
         message:
