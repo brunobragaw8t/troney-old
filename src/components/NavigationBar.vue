@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import BaseButton from "@/components/BaseButton.vue";
 
 export interface INavigationBar {
   open: boolean;
@@ -36,8 +37,15 @@ const emit = defineEmits<{
     @click.self="emit('closeNavigation')"
   >
     <div
-      :class="`${navbarStyle} transition-transform px-4 py-6 w-64 bg-secondary-300`"
+      :class="`${navbarStyle} transition-transform px-4 py-4 w-64 bg-secondary-300`"
     >
+      <div class="flex justify-end mb-4">
+        <i
+          class="fas fa-times leading-none p-2 text-white cursor-pointer transition-colors hover:text-primary-400"
+          @click="emit('closeNavigation')"
+        ></i>
+      </div>
+
       <div class="flex flex-col gap-6">
         <router-link
           v-for="(item, i) in menuItems"
