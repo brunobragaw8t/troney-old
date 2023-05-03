@@ -132,5 +132,5 @@ export const useUserStore = defineStore("user", () => {
     sessionStorage.removeItem("user");
   }
 
-  return { user, login, register, logout };
+  return { userAccessToken, user, login, register, logout };
 });
