@@ -16,6 +16,7 @@ const navbarStyle = computed<string>(() => {
 });
 
 const menuItems = [
+  { to: "/", label: "Dashboard", icon: "fas fa-dashboard" },
   { to: "/transactions", label: "Transactions", icon: "fas fa-coins" },
   { to: "/categories", label: "Categories", icon: "fas fa-folder-open" },
   { to: "/wallets", label: "Wallets", icon: "fas fa-wallet" },
