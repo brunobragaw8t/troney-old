@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import BaseButton from "@/components/BaseButton.vue";
 
 export interface INavigationBar {
   open: boolean;
