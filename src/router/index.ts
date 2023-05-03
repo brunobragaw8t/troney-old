@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import AuthView from "@/views/AuthView.vue";
+import WalletsView from "@/views/WalletsView.vue";
 import { useUserStore } from "@/stores/user";
 
 const router = createRouter({
@@ -23,6 +24,16 @@ const router = createRouter({
       beforeEnter: () => {
         if (null !== useUserStore().user) {
           return { name: "home" };
+        }
+      },
+    },
+    {
+      path: "/wallets",
+      name: "wallets",
+      component: WalletsView,
+      beforeEnter: () => {
+        if (null === useUserStore().user) {
+          return { name: "auth" };
         }
       },
     },
